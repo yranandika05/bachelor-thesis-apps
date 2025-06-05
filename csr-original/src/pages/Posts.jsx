@@ -22,15 +22,23 @@ export default function Posts() {
     if (loading) return <p>Loading ...</p>
 
     return (
-        <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-            <h1>All Posts</h1>
-            {posts.map(post => (
-                <div key={post.id} style={{ marginBottom: '2rem', borderBottom: '1px solid #ccc', paddingBottom: '1rem' }}>
-                    <img src={post.thumbnail} alt="Thumbnail" style={{ width: '100%', height: 'auto', marginBottom: '1rem' }} />
-                    <h2>{post.title}</h2>
-                    <p><em>{post.excerpt}</em></p>
+        <div className="max-w-3xl mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold text-center mb-8">All Posts</h1>
+            {posts.map((post) => (
+                <div
+                    key={post.id}
+                    className="mb-8 pb-6 border-b border-gray-300"
+                >
+                    <img
+                        src={post.thumbnail}
+                        alt="Thumbnail"
+                        className="w-full h-auto mb-4 rounded-md shadow-sm"
+                    />
+                    <h2 className="text-2xl font-semibold mb-1">{post.title}</h2>
+                    <p className="text-gray-600 italic">{post.excerpt}</p>
                 </div>
             ))}
         </div>
-    )
+    );
+
 }
