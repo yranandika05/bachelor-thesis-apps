@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {supabase} from "../supabase/client";
+import {Link} from "react-router-dom";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
@@ -7,10 +8,10 @@ export default function Posts() {
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const {data, error} = await supabase.from('posts').select('*').order('created_at', { ascending: false })
+            const {data, error} = await supabase.from('posts').select('*').order('created_at', {ascending: false})
             if (error) {
                 console.error('Error fetching posts:', error)
-            }else {
+            } else {
                 setPosts(data)
             }
             setLoading(false)
@@ -19,7 +20,7 @@ export default function Posts() {
         fetchPosts()
     }, [])
 
-    if (loading) return <p>Loading ...</p>
+    if (loading) return <p className="text-center mt-10 text-gray-500">Loading ...</p>
 
     return (
         <div className="max-w-3xl mx-auto px-4 py-8">
@@ -34,7 +35,11 @@ export default function Posts() {
                         alt="Thumbnail"
                         className="w-full h-auto mb-4 rounded-md shadow-sm"
                     />
-                    <h2 className="text-2xl font-semibold mb-1">{post.title}</h2>
+                    <h2 className="text-2xl font-semibold mb-1">
+                        <Link to={`/post/${post.id}`} className="text-blue-600 hover:underline">
+                            {post.title}
+                        </Link>
+                    </h2>
                     <p className="text-gray-600 italic">{post.excerpt}</p>
                 </div>
             ))}

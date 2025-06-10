@@ -1,11 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Posts from "./pages/Posts.jsx";
+import {Route, Routes} from "react-router-dom";
+import PostDetail from "./pages/PostDetail.jsx";
 
 function App() {
-  return <Posts />
+  return (
+      <Routes>
+        <Route path="/" element={<Posts />} />
+        <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="*" element={<div className="p-4 text-red-500">404: Not Found</div>} />
+      </Routes>
+  )
 }
 
 export default App
