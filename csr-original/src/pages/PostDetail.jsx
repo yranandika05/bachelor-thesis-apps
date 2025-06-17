@@ -55,11 +55,11 @@ export default function PostDetail() {
             />
 
             {/* Title */}
-            <h1 className="text-3xl font-bold mb-6">{post.title}</h1>
+            <h2 className="text-3xl lg:text-5xl font-semibold md:font-bold mb-2  md:mb-6">{post.title}</h2>
             <p className="text-lg text-primary font-semibold">{post.category}</p>
 
             {/* Content */}
-            <div className="text-gray-700 space-y-6 my-12">
+            <div className="text-gray-700 space-y-6 my-8 md:my-12">
                 {post.content
                     .split("\\n")
                     .map((paragraph, index) => (
