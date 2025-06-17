@@ -26,7 +26,7 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
                             <p className="text-gray-400 text-sm font-semibold">{post.category}</p>
                             <h2
                                 className={`${
-                                    isHero ? "text-2xl font-bold mt-2" : "text-md font-semibold mt-1"
+                                    isHero ? "text-2xl font-bold mt-2" : "text-sm md:text-md font-semibold mt-1"
                                 } text-gray-700 mb-2`}
                             >
                                 {post.title}

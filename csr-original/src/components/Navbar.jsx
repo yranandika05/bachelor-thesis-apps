@@ -9,7 +9,7 @@ export default function Navbar() {
                     <img
                         src="/Logo2.png"
                         alt="MyBlog Logo"
-                        className="w-52 h-auto object-contain"
+                        className="w-36 md:w-52 h-auto object-contain"
                     />
                 </Link>
 
