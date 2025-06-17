@@ -2,16 +2,13 @@ import { Link } from "react-router-dom";
 
 export default function PostCard({ post, variant = "grid", className = "" }) {
     const isHero = variant === "hero";
-    const aspectClass = isHero
-        ? "aspect-[6/5] md:aspect-[6/4]"
-        : "aspect-[6/5]";
     const imgRatioClass = isHero
         ? "aspect-[5/3] md:aspect-[4/2]"
         : "aspect-[6/3]";
 
     return (
         <Link to={`/post/${post.id}`} className={className}>
-            <div className={`relative ${aspectClass}`}>
+            <div className={`relative`}>
                 {/* Card Container with Overflow Hidden */}
                 <div className="relative h-full w-full rounded-lg shadow-lg flex flex-col overflow-hidden group">
                     {/* Base Content */}
@@ -56,12 +53,11 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
                             <h2 className="text-xl font-bold mb-3">{post.title}</h2>
                             <p className="text-sm line-clamp-5 flex-grow">{post.content}</p>
                             <div className="mt-4 text-right">
-                                <Link
-                                    to={`/post/${post.id}`}
+                                <p
                                     className="text-white text-sm font-medium underline underline-offset-4 hover:text-neutral-200"
                                 >
                                     Read more →
-                                </Link>
+                                </p>
                             </div>
                         </div>
                     </div>
