@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
-import { Link } from "react-router-dom";
 import PostCard from "../components/PostCard.jsx";
+import StaffPicks from "../components/StaffPicks.jsx";
+import GridPosts from "../components/GridPosts.jsx";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
@@ -44,27 +45,10 @@ export default function Posts() {
                     />
                 )}
 
-                {/* Sidebar: Staff Picks */}
-                <aside className="space-y-4">
-                    <h3 className="text-xl font-semibold">Staff Picks</h3>
-                    <ul className="space-y-2 text-sm text-blue-700">
-                        {staffPicks.map((item) => (
-                            <li key={item.id}>
-                                <Link to={`/post/${item.id}`} className="hover:underline">
-                                    {item.title}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </aside>
+                <StaffPicks posts={staffPicks} />
             </div>
 
-            {/* Grid Posts */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {gridPosts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
-            </div>
+            <GridPosts posts={gridPosts} />
         </div>
     );
 }
