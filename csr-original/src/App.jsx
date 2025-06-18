@@ -4,11 +4,13 @@ import {Route, Routes} from "react-router-dom";
 import PostDetail from "./pages/PostDetail.jsx";
 import AllPosts from "./pages/AllPosts.jsx";
 import Navbar from "./components/Navbar.jsx";
+import EnvironmentBadge from "./components/EnvirontmentBadge.jsx";
 
 function App() {
   return (
       <>
           <Navbar />
+          <EnvironmentBadge mode="CSR - No Optimization" />
           <main className="max-w-7xl mx-auto w-full px-4 py-4 min-h-[100dvh]">
               <Routes>
                   <Route path="/" element={<Posts/>}/>

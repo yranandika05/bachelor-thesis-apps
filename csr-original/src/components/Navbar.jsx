@@ -15,12 +15,9 @@ export default function Navbar() {
 
                 {/* Navigation Links */}
                 <div className="flex gap-6 items-center text-sm font-medium text-gray-700">
-                    <Link to="/posts">
-                        <p className="text-gray-700 hover:text-primary hover:border-b hover:border-b-primary transition">All Posts</p>
-                    </Link>
-                    <Link to="/write" className="hover:text-blue-600 transition">
+                    <Link to="/posts" className="hover:text-blue-600 transition">
                         <p className="text-white bg-primary rounded-md px-2 py-2 hover:shadow-lg transition">
-                            Write a Blog
+                            See All Posts
                         </p>
                     </Link>
                 </div>
