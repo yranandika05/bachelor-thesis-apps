@@ -34,7 +34,7 @@ export default function Posts() {
     const staffPicks = posts.filter((p) => p.status === "STAFF_PICK");
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8 animate-fade-in-up">
             {/* Hero + Sidebar */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
                 {heroPost && (
