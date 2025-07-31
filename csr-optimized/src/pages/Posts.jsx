@@ -3,6 +3,7 @@ import { supabase } from "../supabase/client";
 import PostCard from "../components/PostCard.jsx";
 import StaffPicks from "../components/StaffPicks.jsx";
 import GridPosts from "../components/GridPosts.jsx";
+import {loadFromCache, saveToCache} from "../utils/cache.js";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
@@ -10,15 +11,22 @@ export default function Posts() {
 
     useEffect(() => {
         const fetchPosts = async () => {
+            const cached = loadFromCache("homepage-posts");
+            if (cached) {
+                setPosts(cached);
+                setLoading(false);
+                return;
+            }
+
             const { data, error } = await supabase
                 .from("posts")
-                .select("*")
+                .select("id, title, category, status, thumbnail")
+                .in("status", ["FEATURED", "HIGHLIGHTED", "STAFF_PICK"])
                 .order("created_at", { ascending: false });
 
-            if (error) {
-                console.error("Error fetching posts:", error);
-            } else {
+            if (!error) {
                 setPosts(data);
+                saveToCache("homepage-posts", data, 5 * 60 * 1000); // 5 Minutes TTL
             }
 
             setLoading(false);
