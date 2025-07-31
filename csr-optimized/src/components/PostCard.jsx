@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import {pages} from "../App.jsx";
 
 export default function PostCard({ post, variant = "grid", className = "" }) {
     const isHero = variant === "hero";
@@ -7,7 +8,11 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
         : "aspect-[6/3]";
 
     return (
-        <Link to={`/post/${post.id}`} className={className}>
+        <Link
+            to={`/post/${post.id}`}
+            onMouseEnter={() => pages["/post/:id"].preload()}
+            className={className}
+        >
             <div className={`relative`}>
                 {/* Card Container with Overflow Hidden */}
                 <div className="relative h-full w-full rounded-lg shadow-lg flex flex-col overflow-hidden group">
@@ -19,6 +24,7 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
                                 src={post.thumbnail}
                                 alt={post.title}
                                 className={`w-full ${imgRatioClass} object-cover`}
+                                loading="lazy"
                             />
                         </div>
                         {/* Text */}
@@ -44,6 +50,7 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
                                 src={post.thumbnail}
                                 alt={post.title}
                                 className="w-full h-full object-cover"
+                                loading="lazy"
                             />
                             <div className="absolute inset-0 bg-black/60" />
                         </div>

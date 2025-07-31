@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import {pages} from "../App.jsx";
 
 export default function StaffPicks({ posts }) {
     if (!posts || posts.length === 0) return null;
@@ -18,7 +19,10 @@ export default function StaffPicks({ posts }) {
                         key={item.id}
                         className="py-1 sm:py-3 px-4 sm:px-6 hover:bg-gray-100 rounded-md transition duration-300"
                     >
-                        <Link to={`/post/${item.id}`}>
+                        <Link
+                            to={`/post/${item.id}`}
+                            onMouseEnter={() => pages["/post/:id"].preload()}
+                        >
                             <p className="text-sm sm:text-base text-primary font-medium">{item.category}</p>
                             <h2 className="text-gray-700 sm:text-xl font-semibold">
                                 {item.title}
