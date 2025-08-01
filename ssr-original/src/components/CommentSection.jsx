@@ -1,72 +1,37 @@
-"use client";
-
-import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-
-export default function CommentSection({ postId, initialComments }) {
-    const [comments, setComments] = useState(initialComments);
-    const [name, setName] = useState("");
-    const [content, setContent] = useState("");
-    const [submitting, setSubmitting] = useState(false);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-
-        const { error } = await supabase.from("comments").insert([
-            {
-                post_id: postId,
-                name: name.trim() || "Anonymous",
-                content: content.trim(),
-                source_app: "ssr-original",
-            },
-        ]);
-
-        if (!error) {
-            setComments([
-                ...comments,
-                {
-                    id: Date.now(), // temporary ID untuk instant update
-                    name: name.trim() || "Anonymous",
-                    content: content.trim(),
-                    created_at: new Date().toISOString(),
-                },
-            ]);
-            setName("");
-            setContent("");
-        } else {
-            console.error("Error submitting comment:", error);
-        }
-
-        setSubmitting(false);
-    };
+export default function CommentSection({ postId, comments }) {
 
     return (
         <div className="mt-10">
             <h3 className="text-xl font-semibold mb-4">Comments</h3>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4 mb-8">
+            {/* Form native */}
+            <form
+                method="POST"
+                action="/api/comment"
+                className="space-y-4 mb-8"
+            >
+                <input
+                    type="hidden"
+                    name="post_id"
+                    value={postId}
+                />
                 <input
                     type="text"
+                    name="name"
                     placeholder="Your name (optional)"
                     className="w-full px-3 py-2 border rounded shadow-sm"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
                 />
                 <textarea
+                    name="content"
                     required
                     placeholder="Write a comment..."
                     className="w-full px-3 py-2 border rounded shadow-sm min-h-[100px]"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
                 />
                 <button
                     type="submit"
-                    disabled={submitting}
                     className="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
                 >
-                    {submitting ? "Posting..." : "Post Comment"}
+                    Post Comment
                 </button>
             </form>
 
