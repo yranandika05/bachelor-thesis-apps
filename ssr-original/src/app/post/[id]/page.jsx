@@ -18,6 +18,7 @@ async function fetchPostsAndComments(id) {
         .from("posts")
         .select("*")
         .neq("id", id)
+        .in("status", ["HIGHLIGHTED"])
         .order("created_at", { ascending: false });
 
     //Fetch comments
@@ -42,8 +43,6 @@ export default async function PostDetail({ params }) {
     if (!post) {
         return <p className="text-center mt-10 text-red-500">Post not found</p>;
     }
-
-    const highlighted = others.filter((p) => p.status === "HIGHLIGHTED");
 
     return (
         <div className="max-w-5xl mx-auto px-4 py-10">
@@ -74,13 +73,13 @@ export default async function PostDetail({ params }) {
             </div>
 
             {/* Comment Section (client component) */}
-            <CommentSection postId={post.id} initialComments={comments} />
+            <CommentSection postId={post.id} comments={comments} />
 
             {/* Highlighted Posts */}
-            {highlighted.length > 0 && (
+            {others.length > 0 && (
                 <div className="mt-16">
                     <h2 className="text-2xl font-bold mb-6">You Might Also Like</h2>
-                    <GridPosts posts={highlighted.slice(0, 4)} />
+                    <GridPosts posts={others.slice(0, 4)} />
                 </div>
             )}
         </div>
