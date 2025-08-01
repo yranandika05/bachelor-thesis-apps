@@ -1,10 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabaseServerClient";
 import PostCard from "@/components/PostCard";
 
-export const dynamic = "force-dynamic"; // agar halaman fresh setiap waktu
-
 export default async function AllPostsPage({ searchParams }) {
-    const search = searchParams?.q?.toLowerCase() || "";
+    const search = await searchParams?.q?.toLowerCase() || "";
 
     const supabase = createSupabaseServerClient();
     const { data: posts, error } = await supabase
@@ -36,6 +34,12 @@ export default async function AllPostsPage({ searchParams }) {
                     placeholder="Search by title or category..."
                     className="w-full sm:max-w-sm px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+                <button
+                    type="submit"
+                    className="ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                    Search
+                </button>
             </form>
 
             {/* Conditional Rendering */}
