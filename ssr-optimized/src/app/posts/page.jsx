@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabaseServerClient";
 import PostCard from "@/components/PostCard";
 
 export default async function AllPostsPage({ searchParams }) {
-    const search = await searchParams?.q?.toLowerCase() || "";
+    const search = searchParams?.q?.toLowerCase() || "";
 
     const supabase = createSupabaseServerClient();
     const { data: posts, error } = await supabase
