@@ -13,6 +13,7 @@ export default function Posts() {
             const { data, error } = await supabase
                 .from("posts")
                 .select("*")
+                .in("status", ["FEATURED", "HIGHLIGHTED", "STAFF_PICK"])
                 .order("created_at", { ascending: false });
 
             if (error) {
