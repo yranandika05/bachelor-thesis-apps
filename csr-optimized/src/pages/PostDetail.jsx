@@ -61,7 +61,6 @@ export default function PostDetail() {
         fetchPostAndOthers();
     }, [id]);
 
-    if (!post) return <p className="text-center mt-10 text-red-500">Post not found</p>;
 
     const highlighted = otherPosts.filter((p) => p.status === "HIGHLIGHTED");
 
