@@ -8,7 +8,13 @@ import {loadFromCache, saveToCache} from "../utils/cache.js";
 
 export default function PostDetail() {
     const { id } = useParams();
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState({
+            thumbnail : "",
+            title: "",
+            category: "",
+            content: ""
+        }
+    );
     const [otherPosts, setOtherPosts] = useState([]);
 
     useEffect(() => {

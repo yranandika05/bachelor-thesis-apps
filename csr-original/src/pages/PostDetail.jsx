@@ -7,7 +7,13 @@ import GridPosts from "../components/GridPosts.jsx";
 
 export default function PostDetail() {
     const { id } = useParams();
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState({
+        thumbnail : "",
+        title: "",
+        category: "",
+        content: ""
+        }
+    );
     const [otherPosts, setOtherPosts] = useState([]);
 
     useEffect(() => {
