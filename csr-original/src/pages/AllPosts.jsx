@@ -5,7 +5,6 @@ import PostCard from "../components/PostCard";
 export default function AllPosts() {
     const [posts, setPosts] = useState([]);
     const [search, setSearch] = useState("");
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchAllPosts = async () => {
@@ -19,7 +18,6 @@ export default function AllPosts() {
             } else {
                 setPosts(data);
             }
-            setLoading(false);
         };
 
         fetchAllPosts();
@@ -47,9 +45,7 @@ export default function AllPosts() {
             </div>
 
             {/* Conditional rendering */}
-            {loading ? (
-                <p className="text-center text-gray-500 py-8">Loading...</p>
-            ) : posts.length === 0 ? (
+            { posts.length === 0 ? (
                 <p className="text-center text-gray-500 py-8">No posts available.</p>
             ) : filtered.length === 0 ? (
                 <p className="text-center text-gray-500 py-8">No matching posts found.</p>

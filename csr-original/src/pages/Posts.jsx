@@ -6,7 +6,6 @@ import GridPosts from "../components/GridPosts.jsx";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -22,13 +21,11 @@ export default function Posts() {
                 setPosts(data);
             }
 
-            setLoading(false);
         };
 
         fetchPosts();
     }, []);
 
-    if (loading) return <p className="text-center mt-10 text-gray-500">Loading ...</p>;
 
     const heroPost = posts.find((p) => p.status === "FEATURED");
     const gridPosts = posts.filter((p) => p.status === "HIGHLIGHTED");

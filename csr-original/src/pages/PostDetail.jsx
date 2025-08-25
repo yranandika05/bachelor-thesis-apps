@@ -9,7 +9,6 @@ export default function PostDetail() {
     const { id } = useParams();
     const [post, setPost] = useState(null);
     const [otherPosts, setOtherPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPostAndOthers = async () => {
@@ -35,13 +34,11 @@ export default function PostDetail() {
                 setOtherPosts(othersData);
             }
 
-            setLoading(false);
         };
 
         fetchPostAndOthers();
     }, [id]);
 
-    if (loading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
     if (!post) return <p className="text-center mt-10 text-red-500">Post not found</p>;
 
     return (
