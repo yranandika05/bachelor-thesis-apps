@@ -1,13 +1,17 @@
 #!/bin/bash
 
 apps=("original-csr" "optimized-csr" "original-ssr" "optimized-ssr")
-networks=("4g" "3g" "cable")
-
+networks=("fast" "middle-speed" "slow")
 paths=(
-  "/"                                             # Homepage
-  "/posts"                                        # All Posts
-  "/post/4985cf07-e496-492c-965c-329159587b8d"    # Post Detail Page With Id '4985cf07-e496-492c-965c-329159587b8d'
+  "/"
+  "/posts"
+  "/post/4985cf07-e496-492c-965c-329159587b8d"
 )
+
+# Network settings (kbps)
+declare -A downloadSpeeds=( ["fast"]=100000 ["middle-speed"]=50000 ["slow"]=1000 )
+declare -A uploadSpeeds=( ["fast"]=30000 ["middle-speed"]=15000 ["slow"]=1000 )
+declare -A latencies=( ["fast"]=5 ["middle-speed"]=50 ["slow"]=100 )
 
 for app in "${apps[@]}"; do
   base_url="https://${app}-app.vercel.app"
@@ -15,24 +19,29 @@ for app in "${apps[@]}"; do
   for net in "${networks[@]}"; do
     echo "Testing $app under $net network..."
 
+    # Network parameters
+    down=${downloadSpeeds[$net]}
+    up=${uploadSpeeds[$net]}
+    latency=${latencies[$net]}
+
     output_dir="results/$app/$net"
-    mkdir -p "$output_dir"
+    #mkdir -p "$output_dir"
 
-    for path in "${paths[@]}"; do
-      # Generate a safe filename: remove slashes
-      filename=$(echo "$path" | sed 's/\//_/g' | sed 's/^_//')
-      if [ -z "$filename" ]; then filename="home"; fi
-
-      sitespeed.io "${base_url}${path}" \
-        --browsertime.connectivity.profile "$net" \
-        --outputFolder "$output_dir/$filename" \
-        --browsertime.skipHar \
-        --browsertime.screenshot false \
-        --video false \
-        --visualMetrics false \
-        --html.showAllWaterfalls false \
-        --summaryDetail false \
-        -n 1
-    done
+    docker run --rm \
+      -v "$(pwd)/$output_dir:/sitespeed.io" \
+      sitespeedio/sitespeed.io:38.1.1 "${base_url}/" "${base_url}/posts" "${base_url}/post/4985cf07-e496-492c-965c-329159587b8d"  \
+      --browsertime.connectivity.profile custom \
+      --browsertime.connectivity.down "$down" \
+      --browsertime.connectivity.up "$up" \
+      --browsertime.connectivity.latency "$latency" \
+      --browsertime.skipHar \
+      --video false \
+      --visualMetrics false \
+      --html.showAllWaterfalls false \
+      --summary-detail false \
+      -n 3
   done
 done
+
+
+

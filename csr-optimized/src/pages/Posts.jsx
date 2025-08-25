@@ -7,7 +7,6 @@ import {loadFromCache, saveToCache} from "../utils/cache.js";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -29,13 +28,11 @@ export default function Posts() {
                 saveToCache("homepage-posts", data, 5 * 60 * 1000); // 5 Minutes TTL
             }
 
-            setLoading(false);
         };
 
         fetchPosts();
     }, []);
 
-    if (loading) return <p className="text-center mt-10 text-gray-500">Loading ...</p>;
 
     const heroPost = posts.find((p) => p.status === "FEATURED");
     const gridPosts = posts.filter((p) => p.status === "HIGHLIGHTED");

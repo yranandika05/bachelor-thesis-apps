@@ -19,7 +19,7 @@ export default function PostCard({ post, variant = "grid", className = "" }) {
                             <Image
                                 src={post.thumbnail}
                                 alt={post.title}
-                                width={800} // ✅ Sesuaikan ukuran asli untuk optimization
+                                width={800}
                                 height={500}
                                 className={`w-full ${imgRatioClass} object-cover`}
                             />
