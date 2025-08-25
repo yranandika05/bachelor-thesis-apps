@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apps=("optimized-csr")
-networks=("slow")
+networks=("fast" "middle-speed" "slow")
 
 # Network settings (kbps)
 declare -A downloadSpeeds=( ["fast"]=100000 ["middle-speed"]=5000 ["slow"]=400 )

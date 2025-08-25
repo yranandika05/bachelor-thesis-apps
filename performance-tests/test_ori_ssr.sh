@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apps=("original-ssr")
-networks=("fast")
+networks=("fast" "middle-speed" "slow")
 
 
 # Network settings (kbps)
