@@ -4,9 +4,9 @@ apps=("optimized-csr")
 networks=("fast" "middle-speed" "slow")
 
 # Network settings (kbps)
-declare -A downloadSpeeds=( ["fast"]=100000 ["middle-speed"]=5000 ["slow"]=400 )
-declare -A uploadSpeeds=( ["fast"]=30000 ["middle-speed"]=1500 ["slow"]=400 )
-declare -A latencies=( ["fast"]=5 ["middle-speed"]=100 ["slow"]=400 )
+declare -A downloadSpeeds=( ["fast"]=100000 ["middle-speed"]=10000 ["slow"]=400 )
+declare -A uploadSpeeds=( ["fast"]=30000 ["middle-speed"]=5000 ["slow"]=400 )
+declare -A latencies=( ["fast"]=30 ["middle-speed"]=200 ["slow"]=400 )
 
 for app in "${apps[@]}"; do
   base_url="https://${app}-app.vercel.app"
