@@ -21,8 +21,10 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@types/node": "^24.3.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@vercel/node": "^5.3.21",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
