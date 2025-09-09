@@ -2,19 +2,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-    const res = NextResponse.next();
-
-    if (req.nextUrl.pathname === "/" || req.nextUrl.pathname.startsWith("/posts")) {
+    const accept = req.headers.get("accept") || "";
+    if (accept.includes("text/html")) {
+        const res = NextResponse.next();
         res.headers.set("Cache-Control", "no-store");
+        return res;
     }
-
-    if (/\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|gif|webp|svg|ico|avif)$/.test(req.nextUrl.pathname)) {
-        res.headers.set("Cache-Control", "public, max-age=31536000, immutable");
-    }
-
-    return res;
+    return NextResponse.next();
 }
 
 export const config = {
-    matcher: "/:path*",
+    matcher: [
+        "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
+    ],
 };
