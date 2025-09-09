@@ -4,7 +4,6 @@ import { supabase } from "../supabase/client.js";
 import CommentSection from "../components/CommentSection.jsx";
 import StaffPicks from "../components/StaffPicks.jsx";
 import GridPosts from "../components/GridPosts.jsx";
-import {loadFromCache, saveToCache} from "../utils/cache.js";
 
 export default function PostDetail() {
     const { id } = useParams();
@@ -19,47 +18,26 @@ export default function PostDetail() {
 
     useEffect(() => {
         const fetchPostAndOthers = async () => {
-            const postCacheKey = `post-detail-${id}`;
-            const listCacheKey = "homepage-posts";
+            // Fetch post detail
+            const { data: postData, error: postError } = await supabase
+                .from("posts")
+                .select("*")
+                .eq("id", id)
+                .single();
 
-            // Try load from cache
-            const cachedPost = loadFromCache(postCacheKey);
-            const cachedList = loadFromCache(listCacheKey);
+            // Fetch other posts
+            const { data: othersData, error: othersError } = await supabase
+                .from("posts")
+                .select("*")
+                .neq("id", id)
+                .in("status", ["HIGHLIGHTED"])
+                .order("created_at", { ascending: false });
 
-            if (cachedPost) {
-                setPost(cachedPost);
-            }
-
-            if (cachedList) {
-                setOtherPosts(cachedList.filter(p => p.id !== id));
-            }
-
-            // Only fetch post if not cached
-            if (!cachedPost) {
-                const { data: postData, error: postError } = await supabase
-                    .from("posts")
-                    .select("*")
-                    .eq("id", id)
-                    .single();
-
-                if (!postError && postData) {
-                    setPost(postData);
-                    saveToCache(postCacheKey, postData, 5 * 60 * 1000); // 5 min TTL
-                }
-            }
-
-            // Only fetch list if not cached
-            if (!cachedList) {
-                const { data: othersData, error: othersError } = await supabase
-                    .from("posts")
-                    .select("id, title, category, status, thumbnail")
-                    .in("status", ["FEATURED", "HIGHLIGHTED", "STAFF_PICK"])
-                    .order("created_at", { ascending: false });
-
-                if (!othersError && othersData) {
-                    saveToCache(listCacheKey, othersData, 5 * 60 * 1000);
-                    setOtherPosts(othersData.filter(p => p.id !== id));
-                }
+            if (postError || othersError) {
+                console.error("Error fetching data:", postError || othersError);
+            } else {
+                setPost(postData);
+                setOtherPosts(othersData);
             }
 
         };
