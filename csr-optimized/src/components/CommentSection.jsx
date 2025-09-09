@@ -8,7 +8,7 @@ export default function CommentSection({ postId }) {
     const [content, setContent] = useState("")
     const [submitting, setSubmitting] = useState(false)
 
-    const sourceApp = "csr-original" // ⬅️ hardcoded untuk app ini
+    const sourceApp = "csr-original"
 
     useEffect(() => {
         fetchComments()
